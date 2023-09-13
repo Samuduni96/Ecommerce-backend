@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response, Application } from "express";
 import dotenv from "dotenv";
 import http from "http";
 import mongoose from "mongoose";
+import userRoutes  from "./routes/user.routes";
 
 dotenv.config();
 const app: Application = express();
@@ -22,7 +23,13 @@ mongoose
   });
 
 const StartServer = () => {
+  app.use(express.json());
+
+  app.use("/user", userRoutes);
+
   http.createServer(app).listen(process.env.SERVER_PORT, () => {
     console.log(`Server is running on port ${process.env.SERVER_PORT}`);
   });
 };
+
+export default app;
